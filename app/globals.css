@@ -1,26 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat: ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-eerie-black: #131313;
+  --color-raisin-black: hsl(231, 10%, 14%);
+  --color-roman-silver: hsl(229, 10%, 57%);
+  --color-crimson-red: #c92034;
+  --color-primary: #ff6b35;
+  --color-white-10: hsla(0, 0%, 100%, 0.1);
+  --color-white-5: hsla(0, 0%, 100%, 0.05);
+  
+  --font-family-montserrat: "Montserrat", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    font-size: 10px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-eerie-black);
+    color: var(--color-roman-silver);
+    font-family: var(--font-family-montserrat);
+    font-size: 1.6rem;
+    line-height: 1.75;
+    background-image: url("/images/DOTTED_BG.png");
+  }
+
+  body.nav-active {
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar  {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 9999px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+  }
+
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem;
+  }
+}
+
+/* Swiper Custom Styles */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 24px !important;
+}
+
+/* Typing Cursor */
+.typing-cursor {
+  display: inline-block;
+  color: var(--color-crimson-red);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* Wavy Background Animations */
+@keyframes wave-slow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes wave-medium {
+  0%, 100% {
+    transform: scale(1.05) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(0.95) rotate(-180deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes wave-fast {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.15) rotate(360deg);
+    opacity: 0.6;
+  }
+}
+
+.animate-wave-slow {
+  animation: wave-slow 8s ease-in-out infinite;
+}
+
+.animate-wave-medium {
+  animation: wave-medium 6s ease-in-out infinite reverse;
+}
+
+.animate-wave-fast {
+  animation: wave-fast 10s ease-in-out infinite;
+}
+
+/* Infinite Scroll Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Portfolio Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
 }
