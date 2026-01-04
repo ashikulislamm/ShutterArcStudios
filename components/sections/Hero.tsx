@@ -1,14 +1,11 @@
 'use client'
 
-import { useState } from 'react'
 import Typewriter from 'typewriter-effect'
 import { TYPING_WORDS, SOCIAL_LINKS, CONTACT_INFO } from '@/lib/constants'
 import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 
 export default function Hero() {
-  const [isSelected, setIsSelected] = useState(false)
-
   return (
     <section className="section mt-32 md:mt-40 lg:mt-48 pb-16 md:pb-24 lg:pb-32 bg-hero-pattern bg-cover bg-center bg-no-repeat">
       <Container className="text-center">
@@ -21,13 +18,7 @@ export default function Hero() {
         </h1>
         
         <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold flex justify-center items-center mt-8 px-2">
-          <span 
-            className={`uppercase inline-block px-2 py-1 transition-all duration-300 ${
-              isSelected 
-                ? 'bg-crimson-red text-white' 
-                : 'text-crimson-red'
-            }`}
-          >
+          <span className="text-crimson-red uppercase inline-block">
             <Typewriter
               options={{
                 strings: [...TYPING_WORDS],
@@ -38,27 +29,6 @@ export default function Hero() {
                 cursor: '|',
                 wrapperClassName: 'typewriter-wrapper',
                 cursorClassName: 'typewriter-cursor',
-              }}
-              onInit={(typewriter) => {
-                typewriter
-                  .callFunction(() => setIsSelected(false))
-                  .typeString(TYPING_WORDS[0])
-                  .callFunction(() => setIsSelected(true))
-                  .pauseFor(2000)
-                  .callFunction(() => setIsSelected(false))
-                  .deleteAll()
-                  .callFunction(() => {
-                    TYPING_WORDS.slice(1).forEach((word) => {
-                      typewriter
-                        .callFunction(() => setIsSelected(false))
-                        .typeString(word)
-                        .callFunction(() => setIsSelected(true))
-                        .pauseFor(2000)
-                        .callFunction(() => setIsSelected(false))
-                        .deleteAll()
-                    })
-                    typewriter.start()
-                  })
               }}
             />
           </span>

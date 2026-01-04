@@ -64,13 +64,13 @@ interface ServiceCardProps {
 
 function ServiceCard({ service }: ServiceCardProps) {
   return (
-    <div className="bg-raisin-black rounded-lg p-10 h-full transition-all duration-300 hover:bg-raisin-black group">
-      <div className="w-12 h-12">
+    <div className="bg-raisin-black rounded-lg p-10 pb-0 h-full transition-all duration-300 hover:bg-raisin-black group">
+      <div className="w-40 h-40">
         <Image 
           src={service.icon} 
           alt={service. title}
-          width={50}
-          height={50}
+          width={80}
+          height={80}
         />
       </div>
 
