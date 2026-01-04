@@ -112,7 +112,7 @@ export default function Header() {
             href={`mailto:${CONTACT_INFO.email}`}
             className="block text-center bg-white text-eerie-black text-sm font-medium px-6 py-3 rounded-full hover:bg-crimson-red hover:text-white transition-all duration-300 mt-6"
           >
-            {CONTACT_INFO.email}
+            Let's Connect
           </a>
         </nav>
 

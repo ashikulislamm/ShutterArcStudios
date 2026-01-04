@@ -1,43 +1,74 @@
 'use client'
 
-import { useTypingEffect } from '@/hooks/useTypingEffect'
+import { useState } from 'react'
+import Typewriter from 'typewriter-effect'
 import { TYPING_WORDS, SOCIAL_LINKS, CONTACT_INFO } from '@/lib/constants'
 import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 
 export default function Hero() {
-  const { displayText, isSelected } = useTypingEffect(TYPING_WORDS, 80, 50, 2000)
+  const [isSelected, setIsSelected] = useState(false)
 
   return (
-    <section className="section mt-18">
+    <section className="section mt-32 md:mt-40 lg:mt-48 pb-16 md:pb-24 lg:pb-32 bg-hero-pattern bg-cover bg-center bg-no-repeat">
       <Container className="text-center">
-        <h3 className="text-lg md:text-2xl lg:text-3xl text-crimson-red font-bold uppercase tracking-[0.2em]">
+        <h3 className="text-base sm:text-lg md:text-2xl lg:text-2xl text-crimson-red font-bold uppercase tracking-[0.05em] md:tracking-[0.15em] lg:tracking-[0.2em] px-2 break-words">
           With Your Creative Partners For Visual Excellence
         </h3>
         
-        <h1 className="text-4xl xl:text-[50px] text-white font-bold md:mt-6 leading-30">
+        <h1 className="text-5xl sm:text-4xl xl:text-[60px] text-white font-bold mt-6 leading-tight md:leading-normal px-2">
           Hire High Performing
         </h1>
         
-        <h2 className="text-3xl md:text-5xl lg:text-6xl text-white font-bold flex justify-center items-center mt-2">
+        <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold flex justify-center items-center mt-8 px-2">
           <span 
-            className={`px-4 py-2 transition-all duration-300 inline-block min-w-[280px] sm:min-w-[320px] md:min-w-[450px] lg:min-w-[550px] text-center uppercase ${
+            className={`uppercase inline-block px-2 py-1 transition-all duration-300 ${
               isSelected 
                 ? 'bg-crimson-red text-white' 
                 : 'text-crimson-red'
             }`}
           >
-            {displayText}
-            <span className="invisible">{displayText ? '' : 'CINEMATOGRAPHY'}</span>
+            <Typewriter
+              options={{
+                strings: [...TYPING_WORDS],
+                autoStart: true,
+                loop: true,
+                delay: 80,
+                deleteSpeed: 50,
+                cursor: '|',
+                wrapperClassName: 'typewriter-wrapper',
+                cursorClassName: 'typewriter-cursor',
+              }}
+              onInit={(typewriter) => {
+                typewriter
+                  .callFunction(() => setIsSelected(false))
+                  .typeString(TYPING_WORDS[0])
+                  .callFunction(() => setIsSelected(true))
+                  .pauseFor(2000)
+                  .callFunction(() => setIsSelected(false))
+                  .deleteAll()
+                  .callFunction(() => {
+                    TYPING_WORDS.slice(1).forEach((word) => {
+                      typewriter
+                        .callFunction(() => setIsSelected(false))
+                        .typeString(word)
+                        .callFunction(() => setIsSelected(true))
+                        .pauseFor(2000)
+                        .callFunction(() => setIsSelected(false))
+                        .deleteAll()
+                    })
+                    typewriter.start()
+                  })
+              }}
+            />
           </span>
-          <span className="typing-cursor ml-1">|</span>
         </h2>
 
-        <p className="text-roman-silver max-w-5xl mx-auto mt-8 leading-relaxed">
+        <p className="text-roman-silver max-w-5xl mx-auto mt-8 leading-relaxed px-4 text-sm sm:text-base">
           Elevate your brand with a team dedicated to storytelling, innovation, and visual brilliance. From stunning visuals to cinematic masterpieces, we handle it all so you can focus on what you do best.
         </p>
 
-        <div className="flex justify-center gap-5 mt-10 flex-wrap">
+        <div className="flex justify-center gap-5 mt-10 flex-wrap px-4">
           <Button href={`mailto:${CONTACT_INFO.email}`}>
             Hire Us
           </Button>

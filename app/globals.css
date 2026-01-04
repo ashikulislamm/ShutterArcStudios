@@ -23,6 +23,7 @@
   html {
     font-size: 10px;
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
@@ -32,6 +33,9 @@
     font-size: 1.6rem;
     line-height: 1.75;
     background-image: url("/images/DOTTED_BG.png");
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
   }
 
   body.nav-active {
@@ -92,11 +96,15 @@
   font-size: 24px !important;
 }
 
-/* Typing Cursor */
-.typing-cursor {
+/* Typewriter Effect Styles */
+.typewriter-wrapper {
   display: inline-block;
   color: var(--color-crimson-red);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.typewriter-cursor {
+  color: var(--color-crimson-red);
+  font-weight: bold;
 }
 
 @keyframes pulse {

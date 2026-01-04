@@ -112,8 +112,8 @@ export default function PortfolioSlider() {
         <div className="max-w-[1300px] mx-auto px-4">
           <div
             ref={sliderRef}
-            className="relative flex items-center justify-center"
-            style={{ height: "500px" }}
+            className="relative flex items-center justify-center h-[300px] md:h-[450px] lg:h-[550px]"
+            
           >
             {videos.map((video, index) => (
               <div

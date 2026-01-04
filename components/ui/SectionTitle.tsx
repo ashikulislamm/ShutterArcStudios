@@ -12,7 +12,7 @@ export default function SectionTitle({ subtitle, title, description, className =
         <p className="uppercase text-lg font-bold tracking-widest text-roman-silver mb-5">
           {subtitle}
         </p>
-        <h2 className="text-7xl font-bold text-white leading-none">
+        <h2 className="text-7xl font-bold text-white leading-none mb-12 lg:mb-0 lg:text-left">
           {title}
         </h2>
       </div>
