@@ -9,50 +9,59 @@ import Button from "@/components/ui/Button";
 import { portfolioVideos } from "@/lib/data";
 
 export default function PortfolioSlider() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(portfolioVideos.length);
   const sliderRef = useRef<HTMLDivElement>(null);
   const isAnimating = useRef(false);
 
   const videos = [...portfolioVideos, ...portfolioVideos, ...portfolioVideos];
 
-  const updateSlider = (
-    newIndex: number,
-    direction: "next" | "prev" = "next"
-  ) => {
+  const goToNext = () => {
     if (isAnimating.current) return;
     isAnimating.current = true;
 
-    const slides = sliderRef.current?.querySelectorAll(".portfolio-slide");
-    if (!slides) return;
-
-    gsap.to(slides, {
-      x: direction === "next" ? "-=100%" : "+=100%",
-      duration: 0.8,
-      ease: "power2.inOut",
-      onComplete: () => {
-        setCurrentIndex(newIndex);
-        isAnimating.current = false;
-      },
-    });
-  };
-
-  const goToNext = () => {
-    const nextIndex = (currentIndex + 1) % portfolioVideos.length;
-    updateSlider(nextIndex, "next");
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const goToPrev = () => {
-    const prevIndex =
-      currentIndex === 0 ? portfolioVideos.length - 1 : currentIndex - 1;
-    updateSlider(prevIndex, "prev");
+    if (isAnimating.current) return;
+    isAnimating.current = true;
+
+    setCurrentIndex((prev) => prev - 1);
   };
+
+  useEffect(() => {
+    // Reset position when reaching boundaries (seamless loop)
+    if (currentIndex >= portfolioVideos.length * 2) {
+      setTimeout(() => {
+        const slides = sliderRef.current?.querySelectorAll(".portfolio-slide");
+        if (!slides) return;
+
+        slides.forEach((slide) => {
+          gsap.set(slide, { duration: 0 });
+        });
+
+        setCurrentIndex(portfolioVideos.length);
+      }, 50);
+    } else if (currentIndex < portfolioVideos.length) {
+      setTimeout(() => {
+        const slides = sliderRef.current?.querySelectorAll(".portfolio-slide");
+        if (!slides) return;
+
+        slides.forEach((slide) => {
+          gsap.set(slide, { duration: 0 });
+        });
+
+        setCurrentIndex(portfolioVideos.length * 2 - 1);
+      }, 50);
+    }
+  }, [currentIndex]);
 
   useEffect(() => {
     const slides = sliderRef.current?.querySelectorAll(".portfolio-slide");
     if (!slides) return;
 
     slides.forEach((slide, index) => {
-      const offset = index - currentIndex - portfolioVideos.length;
+      const offset = index - currentIndex;
       const absOffset = Math.abs(offset);
 
       let scale = 0.7;
@@ -60,7 +69,7 @@ export default function PortfolioSlider() {
       let zIndex = 0;
       let blur = 4;
       let pointerEvents = "none";
-      let xPos = offset * 70; // Changed from 100 to 70 for better spacing
+      let xPos = offset * 50;
 
       if (absOffset === 0) {
         scale = 1;
@@ -68,19 +77,19 @@ export default function PortfolioSlider() {
         zIndex = 10;
         blur = 0;
         pointerEvents = "auto";
-        xPos = 0; // Center card at exactly 0
+        xPos = 0;
       } else if (absOffset === 1) {
         scale = 0.75;
         opacity = 0.5;
         zIndex = 5;
         blur = 3;
-        xPos = offset > 0 ? 65 : -65; // Adjusted positioning for side cards
+        xPos = offset > 0 ? 85 : -85;
       } else if (absOffset === 2) {
         scale = 0.6;
         opacity = 0.3;
         zIndex = 2;
         blur = 5;
-        xPos = offset > 0 ? 130 : -130;
+        xPos = offset > 0 ? 170 : -170;
       }
 
       const slideElement = slide as HTMLElement;
@@ -94,6 +103,9 @@ export default function PortfolioSlider() {
         x: `${xPos}%`,
         duration: 0.6,
         ease: "power2.out",
+        onComplete: () => {
+          isAnimating.current = false;
+        },
       });
     });
   }, [currentIndex]);
@@ -109,17 +121,16 @@ export default function PortfolioSlider() {
       </Container>
 
       <div className="relative overflow-hidden">
-        <div className="max-w-[1300px] mx-auto px-4">
+        <div className="max-w-[1200px] mx-auto px-4">
           <div
             ref={sliderRef}
-            className="relative flex items-center justify-center h-[300px] md:h-[450px] lg:h-[550px]"
-            
+            className="relative flex items-center justify-center h-[300px] md:h-[450px] lg:h-[450px]"
           >
             {videos.map((video, index) => (
               <div
                 key={`${video.id}-${index}`}
                 className="portfolio-slide absolute left-1/2 -translate-x-1/2"
-                style={{ width: "800px", maxWidth: "90vw" }}
+                style={{ width: "500px" }}
               >
                 <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-raisin-black">
                   <iframe

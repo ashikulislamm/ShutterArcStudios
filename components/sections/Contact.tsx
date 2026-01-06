@@ -184,7 +184,7 @@ export default function Contact() {
                 Business Hours
               </h4>
               <div className="space-y-2 text-roman-silver">
-                <div className="flex justify-between text-base md:text-lg">
+                <div className="flex justify-between text-lg md:text-lg">
                   <span>Monday - Friday</span>
                   <span className="text-white font-medium">
                     9:00 AM - 6:00 PM

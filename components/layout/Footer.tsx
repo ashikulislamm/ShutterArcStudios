@@ -19,9 +19,9 @@ const socialIcons = [
 
 export default function Footer() {
   return (
-    <footer className="bg-raisin-black py-12">
+    <footer className="bg-raisin-black pt-16 pb-16">
       <Container className="flex flex-col md:flex-row justify-between items-center gap-8">
-        <p className="text-roman-silver">Copyright © 2025 ShutterArc Studios</p>
+        <p className="text-roman-silver">Copyright © 2026 ShutterArc Studios</p>
 
         <p className="text-roman-silver">
           Designed By{" "}

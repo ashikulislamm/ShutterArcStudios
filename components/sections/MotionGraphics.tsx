@@ -28,11 +28,11 @@ export default function MotionGraphics() {
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={4}
+          slidesPerView={3}
           coverflowEffect={{
             rotate: 50,
-            stretch: 0,
-            depth: 200,
+            stretch: 150,
+            depth: 100,
             modifier: 1,
             slideShadows: true,
           }}
@@ -64,7 +64,7 @@ export default function MotionGraphics() {
               },
             },
             1024: {
-              slidesPerView: 4,
+              slidesPerView: 3,
               coverflowEffect: {
                 rotate: 50,
                 stretch: 0,
@@ -77,7 +77,7 @@ export default function MotionGraphics() {
         >
           {videos.map((video, index) => (
             <SwiperSlide key={index}>
-              <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="w-full rounded-2xl overflow-hidden shadow-2xl">
                 <video
                   src={video}
                   autoPlay

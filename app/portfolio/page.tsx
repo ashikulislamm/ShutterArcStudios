@@ -37,7 +37,7 @@ export default function PortfolioPage() {
 
   return (
     <main className="mt-24 min-h-screen pt-24 md:pt-32 pb-16 md:pb-20">
-      <Container className="max-w-[1400px]">
+      <Container className="max-w-[1300px]">
         <div className="text-center mb-12 md:mb-16 px-4">
           <p className="uppercase text-sm md:text-xl font-bold tracking-widest text-roman-silver mb-3 md:mb-4">
             Explore Our Creative Work
@@ -113,7 +113,7 @@ function PortfolioCard({
     if (item.isVertical) {
       // Vary between tall sizes for visual interest
       const tallPatterns = [
-        "col-span-1 row-span-2", // Tall
+        "col-span-2 row-span-2", // Tall
       ];
       return tallPatterns[index % tallPatterns.length];
     }

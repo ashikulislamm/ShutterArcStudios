@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useScrollHeader } from "@/hooks/useScrollHeader";
 import { NAV_LINKS, CONTACT_INFO } from "@/lib/constants";
@@ -10,6 +11,7 @@ import { NAV_LINKS, CONTACT_INFO } from "@/lib/constants";
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const isScrolled = useScrollHeader();
+  const pathname = usePathname();
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -21,9 +23,17 @@ export default function Header() {
     document.body.classList.remove("nav-active");
   };
 
+  const handleNavClick = (href: string) => {
+    // If it's a section link (starts with #) and we're not on home page
+    if (href.startsWith("#") && pathname !== "/") {
+      // Navigate to home page with the section hash
+      window.location.href = `/${href}`;
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 w-full z-40 py-6 ">
-      <div className="container max-w-[1300px] mx-auto px-4 ">
+      <div className="container max-w-[1200px] mx-auto px-4 ">
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center justify-between bg-raisin-black/80 backdrop-blur-lg rounded-full px-6 py-4 shadow-2xl border border-white-10 ">
           {/* Logo */}
@@ -47,6 +57,7 @@ export default function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
+                  onClick={() => handleNavClick(link.href)}
                   className="text-white text-xl font-medium hover:text-crimson-red transition-colors relative group"
                 >
                   {link.label}
@@ -107,7 +118,10 @@ export default function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  onClick={closeNav}
+                  onClick={() => {
+                    handleNavClick(link.href);
+                    closeNav();
+                  }}
                   className="text-white text-xl font-medium py-3 px-4 rounded-xl hover:bg-white-5 hover:text-crimson-red transition-all"
                 >
                   {link.label}
