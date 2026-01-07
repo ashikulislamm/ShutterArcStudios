@@ -11,7 +11,7 @@ import Contact from '@/components/sections/Contact'
 
 export default function Home() {
   return (
-    <article className='max-w-[1200px] mx-auto px-4'>
+    <article className='max-w-[1300px] mx-auto px-4'>
       <Hero />
       <PortfolioSlider />
       <MotionGraphics />

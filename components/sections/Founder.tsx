@@ -17,10 +17,10 @@ export default function Founder() {
   return (
     <section className="section py-0 md:py-10" id="founder">
       <Container>
-        <div className="grid lg:grid-cols-2 items-center">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* Left Side - Image and Title */}
           <div className="relative">
-            <div className="mb-8">
+            <div className="mb-16">
               <p className="uppercase text-lg font-bold tracking-widest text-roman-silver mb-3">
                 Meet Our
               </p>

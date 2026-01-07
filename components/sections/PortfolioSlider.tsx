@@ -72,20 +72,20 @@ export default function PortfolioSlider() {
       let xPos = offset * 50;
 
       if (absOffset === 0) {
-        scale = 1;
+        scale = 1.3;
         opacity = 1;
         zIndex = 10;
         blur = 0;
         pointerEvents = "auto";
         xPos = 0;
       } else if (absOffset === 1) {
-        scale = 0.75;
+        scale = 0.7;
         opacity = 0.5;
         zIndex = 5;
         blur = 3;
         xPos = offset > 0 ? 85 : -85;
       } else if (absOffset === 2) {
-        scale = 0.6;
+        scale = 0.55;
         opacity = 0.3;
         zIndex = 2;
         blur = 5;
@@ -121,16 +121,15 @@ export default function PortfolioSlider() {
       </Container>
 
       <div className="relative overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-4">
+        <div className="max-w-[1300px] mx-auto px-4">
           <div
             ref={sliderRef}
-            className="relative flex items-center justify-center h-[300px] md:h-[450px] lg:h-[450px]"
+            className="relative flex items-center justify-center h-[200px] md:h-[400px] lg:h-[450px]"
           >
             {videos.map((video, index) => (
               <div
                 key={`${video.id}-${index}`}
-                className="portfolio-slide absolute left-1/2 -translate-x-1/2"
-                style={{ width: "500px" }}
+                className="portfolio-slide absolute left-1/2 -translate-x-1/2 w-[300px] md:w-[400px] lg:w-[550px] px-10 md:px-20"
               >
                 <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-raisin-black">
                   <iframe

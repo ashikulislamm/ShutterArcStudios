@@ -68,20 +68,104 @@ export default function PortfolioPage() {
           ))}
         </div>
 
-        {/* Portfolio Grid - Bento Style */}
+        {/* Portfolio Grid - Grouped by Type */}
         <div
-          className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4 lg:gap-5 px-4 transition-opacity duration-300 ${
+          className={`transition-opacity duration-300 ${
             isAnimating ? "opacity-0" : "opacity-100"
           }`}
         >
-          {filteredItems.map((item, index) => (
-            <PortfolioCard
-              key={item.id}
-              item={item}
-              index={index}
-              isAnimating={isAnimating}
-            />
-          ))}
+          {/* Videos & Cinematography Group */}
+          {filteredItems.some(
+            (item) =>
+              !item.isVertical &&
+              (item.category === "videos" || item.category === "cinematography")
+          ) && (
+            <div className="mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 px-4">
+                Videos & Cinematography
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4">
+                {filteredItems
+                  .filter(
+                    (item) =>
+                      !item.isVertical &&
+                      (item.category === "videos" ||
+                        item.category === "cinematography")
+                  )
+                  .map((item, index) => (
+                    <PortfolioCard
+                      key={item.id}
+                      item={item}
+                      index={index}
+                      isAnimating={isAnimating}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* Reels Group */}
+          {filteredItems.some((item) => item.category === "reels") && (
+            <div className="mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 px-4">
+                Reels
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 px-4">
+                {filteredItems
+                  .filter((item) => item.category === "reels")
+                  .map((item, index) => (
+                    <PortfolioCard
+                      key={item.id}
+                      item={item}
+                      index={index}
+                      isAnimating={isAnimating}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* Animations Group */}
+          {filteredItems.some((item) => item.category === "animations") && (
+            <div className="mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 px-4">
+                Animations
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4">
+                {filteredItems
+                  .filter((item) => item.category === "animations")
+                  .map((item, index) => (
+                    <PortfolioCard
+                      key={item.id}
+                      item={item}
+                      index={index}
+                      isAnimating={isAnimating}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* Photography Group */}
+          {filteredItems.some((item) => item.category === "photography") && (
+            <div className="mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 px-4">
+                Photography
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 px-4">
+                {filteredItems
+                  .filter((item) => item.category === "photography")
+                  .map((item, index) => (
+                    <PortfolioCard
+                      key={item.id}
+                      item={item}
+                      index={index}
+                      isAnimating={isAnimating}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {filteredItems.length === 0 && (
@@ -107,34 +191,11 @@ function PortfolioCard({
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Smart Bento grid sizing based on content orientation
-  const getBentoClass = (item: (typeof portfolioItems)[0], index: number) => {
-    // Portrait orientation (Reels) - tall items
-    if (item.isVertical) {
-      // Vary between tall sizes for visual interest
-      const tallPatterns = [
-        "col-span-2 row-span-2", // Tall
-      ];
-      return tallPatterns[index % tallPatterns.length];
-    }
-
-    // Landscape orientation (Videos, Cinematography, Photos, Animations)
-    const landscapePatterns = [
-      "col-span-2 row-span-1", // Wide
-
-      "col-span-2 row-span-2", // Large square/landscape
-
-      "col-span-2 row-span-1", // Wide
-    ];
-    return landscapePatterns[index % landscapePatterns.length];
-  };
-
   return (
     <div
-      className={`group relative rounded-lg md:rounded-xl overflow-hidden bg-raisin-black shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] ${getBentoClass(
-        item,
-        index
-      )}`}
+      className={`group relative rounded-lg md:rounded-xl overflow-hidden bg-raisin-black shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] ${
+        item.isVertical ? "aspect-[9/16]" : "aspect-video"
+      }`}
       style={{
         animation: !isAnimating
           ? `fadeInUp 0.6s ease-out ${index * 0.05}s both`
@@ -152,16 +213,6 @@ function PortfolioCard({
             loading="lazy"
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-              <h3 className="text-white text-base md:text-xl font-bold">
-                {item.title}
-              </h3>
-              <p className="text-gray-300 text-xs md:text-sm mt-1 capitalize">
-                {item.category}
-              </p>
-            </div>
-          </div>
         </div>
       ) : (
         <div className="relative w-full h-full">
