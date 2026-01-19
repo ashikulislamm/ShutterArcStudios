@@ -1,3 +1,4 @@
+//Homepage Portfolio Videos Links
 export const portfolioVideos = [
   { id: 1, src: "https://www.youtube.com/embed/dx9dLgD0qyE" },
   { id: 2, src: "https://www.youtube.com/embed/EmbKQJMnFx0" },
@@ -10,6 +11,7 @@ export const portfolioVideos = [
   { id: 9, src: "https://www.youtube.com/embed/VJ2KnMzf2Zc" },
 ];
 
+//Homepage Motion Graphics Videos Links
 export const motionGraphicsVideos = [
   "/images/GIF/GIF1.mp4",
   "/images/GIF/GIF2.mp4",
@@ -18,6 +20,7 @@ export const motionGraphicsVideos = [
   "/images/GIF/GIF5.mp4",
 ];
 
+//Services Information
 export const services = [
   {
     id: 1,
@@ -53,6 +56,7 @@ export const services = [
   },
 ];
 
+//Skills & Tools Logos
 export const skillTools = [
   { id: 1, src: "/images/AI.png", alt: "Adobe Illustrator" },
   { id: 2, src: "/images/PR.png", alt: "Adobe Premiere Pro" },
@@ -62,6 +66,7 @@ export const skillTools = [
   { id: 6, src: "/images/LR.png", alt: "Adobe Lightroom" },
 ];
 
+//Brands Logos
 export const brands = [
   { id: 1, src: "/images/Brands/10MS.png", alt: "10MS" },
   { id: 2, src: "/images/Brands/ACS.png", alt: "ACS" },
@@ -74,6 +79,7 @@ export const brands = [
   { id: 9, src: "/images/Brands/nk logo.png", alt: "NK" },
 ];
 
+//Counter Statistics
 export const counterStats = [
   { id: 1, value: 7, label: "Years of Experience", suffix: "+" },
   { id: 2, value: 600, label: "Videos Edited", suffix: "+" },
@@ -81,6 +87,7 @@ export const counterStats = [
   { id: 4, value: 900, label: "Total Video Views", suffix: "k+" },
 ];
 
+//Team Information
 export const teamMembers = [
   {
     id: 1,
@@ -123,6 +130,7 @@ export interface PortfolioItem {
   isVertical?: boolean;
 }
 
+//Portfolio Page Items Data
 export const portfolioItems: PortfolioItem[] = [
   // Cinematography
   {

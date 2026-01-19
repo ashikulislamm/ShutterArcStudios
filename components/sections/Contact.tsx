@@ -1,8 +1,10 @@
 "use client";
-
 import { useState, FormEvent } from "react";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
+
 import {
   FaPhone,
   FaEnvelope,
@@ -21,15 +23,50 @@ export default function Contact() {
     message: "",
   });
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const form = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+
+    if (!form.current || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    emailjs
+      .sendForm("shutterArcStudios", "shutterarcstudios_temp", form.current, {
+        publicKey: "DMi7di5iULFgrht2o",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+          setSubmitStatus("success");
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: "",
+          });
+          setTimeout(() => setSubmitStatus("idle"), 5000);
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+          setSubmitStatus("error");
+          setTimeout(() => setSubmitStatus("idle"), 5000);
+        },
+      )
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -54,7 +91,7 @@ export default function Contact() {
       icon: FaMapMarkerAlt,
       title: "Location",
       details: "Dhaka, Bangladesh",
-      link: "https://maps.google.com",
+      link: "https://maps.app.goo.gl/y99gQN9xhJuEvEmT6",
     },
   ];
 
@@ -209,7 +246,11 @@ export default function Contact() {
             className="bg-gradient-to-br from-raisin-black to-eerie-black p-6 md:p-8 lg:p-10 
                         rounded-2xl md:rounded-3xl shadow-2xl border border-white-10"
           >
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            <form
+              ref={form}
+              onSubmit={handleSubmit}
+              className="space-y-4 md:space-y-6"
+            >
               {/* Name Field */}
               <div className="relative">
                 <label
@@ -353,15 +394,30 @@ export default function Contact() {
               {/* Submit Button */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="group w-full sm:w-auto px-8 md:px-12 py-4 bg-crimson-red text-white 
                          rounded-xl md:rounded-full font-bold text-lg md:text-xl
                          hover:bg-crimson-red/90 transition-all duration-300 
                          hover:shadow-xl hover:shadow-crimson-red/20 hover:scale-[1.02]
-                         flex items-center justify-center gap-3"
+                         flex items-center justify-center gap-3
+                         disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <span>Send Message</span>
+                <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
                 <FaPaperPlane className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </button>
+
+              {/* Status Messages */}
+              {submitStatus === "success" && (
+                <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-500 text-center">
+                  Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+              {submitStatus === "error" && (
+                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-center">
+                  Failed to send message. Please try again or contact us
+                  directly.
+                </div>
+              )}
             </form>
           </div>
         </div>
