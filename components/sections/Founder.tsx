@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import { useTypingEffect } from "@/hooks/useTypingEffect";
-import Typewriter from "typewriter-effect";
+import Typewriter from 'typewriter-effect'
 import Container from "@/components/ui/Container";
-import { TYPING_WORDS } from "@/lib/constants";
 
 const passions = [
   "Cinematography",
@@ -65,9 +64,14 @@ export default function Founder() {
 
             <div className="flex items-center gap-2 text-2xl md:text-4xl font-semibold text-white">
               <span className="uppercase tracking-wide">Passionate In</span>
-              <span className="text-crimson-red uppercase inline-block">
-                Everything
+              <span
+                className={`px-3 py-1 transition-all duration-300 ${
+                  isSelected ? "bg-crimson-red text-white" : "text-crimson-red"
+                }`}
+              >
+                {displayText}
               </span>
+              <span className="typing-cursor">|</span>
             </div>
 
             <p className="text-roman-silver leading-relaxed pt-4">

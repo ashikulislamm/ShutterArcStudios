@@ -1,11 +1,12 @@
 'use client'
 
-import Typewriter from 'typewriter-effect'
+import { useTypingEffect } from "@/hooks/useTypingEffect";
 import { TYPING_WORDS, SOCIAL_LINKS, CONTACT_INFO } from '@/lib/constants'
 import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 
 export default function Hero() {
+  const { displayText, isSelected } = useTypingEffect(TYPING_WORDS, 60, 50, 2000);
   return (
     <section className="section mt-32 md:mt-40 lg:mt-48 pb-16 md:pb-24 lg:pb-32 bg-hero-pattern bg-cover bg-center bg-no-repeat">
       <Container className="text-center">
@@ -19,7 +20,14 @@ export default function Hero() {
         
         <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold flex justify-center items-center mt-8 leading-tight md:leading-normal px-2 inline-block">
           <span className="text-crimson-red uppercase inline-block">
-            Content Creators
+            <span
+                className={`px-3 py-1 transition-all duration-300 ${
+                  isSelected ? "bg-crimson-red text-white" : "text-crimson-red"
+                }`}
+              >
+                {displayText}
+              </span>
+              <span className="typing-cursor">|</span>
           </span>
         </h2>
 

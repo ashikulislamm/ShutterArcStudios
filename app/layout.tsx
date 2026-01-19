@@ -89,7 +89,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className} suppressHydrationWarning={true}>
+      <body className={montserrat.className} suppressHydrationWarning={true} style={{ overflow: 'hidden' }}>
         <Preloader />
         <Header />
         <main>{children}</main>
