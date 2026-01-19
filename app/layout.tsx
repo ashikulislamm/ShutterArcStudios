@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Preloader from "@/components/layout/Preloader";
-import FloatingScheduleButton from "@/components/layout/FloatingScheduleButton";
+import { FloatingAppointmentButton } from "@/components/layout/FloatingScheduleButton";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -94,7 +94,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        <FloatingScheduleButton />
+        <FloatingAppointmentButton />
       </body>
     </html>
   );

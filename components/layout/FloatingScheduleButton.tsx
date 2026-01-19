@@ -1,172 +1,163 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { FaCalendarAlt, FaTimes } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaCalendarAlt as Calendar } from "react-icons/fa";
+import { IoClose as X } from "react-icons/io5";
 
-export default function FloatingScheduleButton() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
-  const calendarTargetRef = useRef<HTMLDivElement>(null);
-  const scriptLoadedRef = useRef(false);
+export const FloatingAppointmentButton = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  // Load Google Calendar scripts
+  const calendarUrl =
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1Q_MoDyJLWXP--XDgjp9W8y1cK772yNKYKxdhy213ofVGwk-u-4wM2WR576OpTeS3TRuJTLm2r?gv=true";
+
+  const openCalendarModal = () => {
+    setShowModal(true);
+    setIsExpanded(false); // Close the expanded card
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // Handle ESC key to close modal
   useEffect(() => {
-    if (scriptLoadedRef.current) return;
-
-    const loadGoogleCalendarScripts = () => {
-      // Add CSS
-      const link = document.createElement("link");
-      link.href =
-        "https://calendar.google.com/calendar/scheduling-button-script.css";
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-
-      // Add Script
-      const script = document.createElement("script");
-      script.src =
-        "https://calendar.google.com/calendar/scheduling-button-script.js";
-      script.async = true;
-      script.onload = () => {
-        setIsScriptLoaded(true);
-      };
-      document.head.appendChild(script);
-
-      scriptLoadedRef.current = true;
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowModal(false);
+      }
     };
 
-    loadGoogleCalendarScripts();
-  }, []);
-
-  // Initialize calendar button when modal opens
-  useEffect(() => {
-    if (isModalOpen && isScriptLoaded && calendarTargetRef.current) {
-      const calendar = (window as any).calendar;
-      if (calendar?.schedulingButton) {
-        // Clear any existing content
-        calendarTargetRef.current.innerHTML = "";
-
-        calendar.schedulingButton.load({
-          url: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1Q_MoDyJLWXP--XDgjp9W8y1cK772yNKYKxdhy213ofVGwk-u-4wM2WR576OpTeS3TRuJTLm2r?gv=true",
-          color: "#D50000",
-          label: "Let's Collaborate",
-          target: calendarTargetRef.current,
-        });
-      }
+    if (showModal) {
+      document.addEventListener("keydown", handleEsc);
+      document.body.style.overflow = "hidden"; // Prevent background scrolling
+    } else {
+      document.body.style.overflow = "unset";
     }
-  }, [isModalOpen, isScriptLoaded]);
+
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "unset";
+    };
+  }, [showModal]);
 
   return (
     <>
-      {/* Floating Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        {/* Tooltip */}
-        <div className="absolute bottom-full right-0 mb-3 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div className="bg-raisin-black text-white px-4 py-2 rounded-lg shadow-xl whitespace-nowrap text-sm font-medium">
-            Schedule a Meeting
-            <div className="absolute top-full right-8 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-raisin-black"></div>
+      {/* Floating Button Container */}
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Expanded Card */}
+        {isExpanded && (
+          <div className="absolute bottom-20 right-0 w-96 bg-gradient-to-br from-raisin-black to-eerie-black backdrop-blur-md rounded-2xl border border-white-10 shadow-2xl shadow-black/20 mb-4 transform transition-all duration-300 ease-out">
+            <div className="p-8">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-6 h-6 text-crimson-red" />
+                  <h3 className="text-white font-bold text-2xl">
+                    Schedule a Call
+                  </h3>
+                </div>
+                <button
+                  onClick={toggleExpanded}
+                  className="text-roman-silver hover:text-white transition-colors p-2 hover:bg-white-10 rounded-full"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Description */}
+              <p className="text-roman-silver text-lg mb-6 leading-relaxed">
+                Let's discuss your project and how we can help bring your
+                creative vision to life.
+              </p>
+
+              {/* Calendar Button */}
+              <button
+                onClick={openCalendarModal}
+                className="w-full bg-crimson-red hover:bg-crimson-red/90 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-crimson-red/25 flex items-center justify-center gap-3"
+              >
+                <Calendar className="w-5 h-5" />
+                Schedule Now
+              </button>
+
+              {/* Features */}
+              <div className="mt-6 space-y-3 text-lg text-roman-silver">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-crimson-red rounded-full"></div>
+                  <span>30 minutes session</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-crimson-red/70 rounded-full"></div>
+                  <span>Free consultation</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-crimson-red/50 rounded-full"></div>
+                  <span>Project discussion</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Button */}
+        {/* Floating Action Button */}
         <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            setIsModalOpen(true);
-          }}
-          className="relative flex items-center gap-3 px-6 py-4 md:px-8 md:py-5 bg-gradient-to-r from-crimson-red to-red-600 
-                   text-white rounded-full shadow-2xl hover:shadow-crimson-red/50 
-                   transition-all duration-300 hover:scale-110 active:scale-95
-                   border-2 border-white/10"
-          aria-label="Schedule Appointment"
+          onClick={toggleExpanded}
+          className="group relative w-16 h-16 bg-crimson-red hover:bg-crimson-red/90 text-white rounded-full shadow-lg shadow-crimson-red/25 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-crimson-red/30 flex items-center justify-center"
         >
-          <FaCalendarAlt className="text-xl md:text-2xl" style={{ animation: 'pulseSlow 3s ease-in-out infinite' }} />
-          <span className="font-bold text-base md:text-lg whitespace-nowrap hidden sm:inline">
-            Let's Collaborate
-          </span>
-        </button>
+          {/* Pulse Animation Ring */}
+          <div className="absolute inset-0 rounded-full bg-crimson-red/20 animate-ping"></div>
 
-        {/* Floating animation ring */}
-        <div className="absolute inset-0 rounded-full bg-crimson-red/20 pointer-events-none" style={{ animation: 'pulseSlow 3s ease-in-out infinite' }}></div>
+          {/* Icon */}
+          <Calendar
+            className={`w-7 h-7 transition-transform duration-300 ${
+              isExpanded ? "rotate-180" : "rotate-0"
+            }`}
+          />
+        </button>
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-8 bg-black/80 backdrop-blur-md"
-          onClick={() => setIsModalOpen(false)}
-          style={{
-            animation: "fadeIn 0.3s ease-out",
-          }}
-        >
+      {showModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center">
+          {/* Backdrop */}
           <div
-            className="relative bg-gradient-to-br from-raisin-black to-eerie-black rounded-3xl shadow-2xl 
-                       max-w-xl w-full overflow-hidden border-2 border-white/10"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              animation: "scaleIn 0.4s ease-out",
-            }}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-2 z-10 w-12 h-12 rounded-full bg-crimson-red 
-                       flex items-center justify-center text-white hover:bg-crimson-red/80 
-                       transition-all duration-300 hover:scale-110 hover:rotate-90 shadow-xl"
-              aria-label="Close"
-            >
-              <FaTimes className="text-xl" />
-            </button>
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={closeModal}
+          />
 
-            {/* Header */}
-            <div className="relative bg-gradient-to-r from-crimson-red/20 to-transparent p-6 border-b border-white/10">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-crimson-red/20 flex items-center justify-center">
-                  <FaCalendarAlt className="text-crimson-red text-xl" />
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">
-                    Schedule Your Meeting
-                  </h2>
-                  <p className="text-roman-silver text-sm md:text-base">
-                    Let's discuss your project and bring your vision to life
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Calendar Content */}
-            <div className="p-6 overflow-auto max-h-auto">
-              <div
-                ref={calendarTargetRef}
-                className="google-calendar-scheduling-container flex justify-center w-full"
+          {/* Modal Content */}
+          <div className="relative bg-gradient-to-br from-raisin-black to-eerie-black rounded-2xl shadow-2xl border border-white-10 w-full max-w-7xl h-[85vh] max-h-[900px] mx-4 overflow-hidden">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 bg-white border-b border-white-10">
+              <h2 className="text-xl md:text-2xl font-bold text-raisin-black">
+                Schedule Your Session
+              </h2>
+              <button
+                onClick={closeModal}
+                className="text-roman-silver hover:text-white p-2 rounded-full hover:bg-crimson-red transition-all duration-300"
               >
-                {!isScriptLoaded && (
-                  <div className="flex flex-col items-center justify-center py-20">
-                    <div className="w-16 h-16 border-4 border-crimson-red border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p className="text-roman-silver text-lg">
-                      Loading calendar...
-                    </p>
-                  </div>
-                )}
-              </div>
+                <X size={24} />
+              </button>
             </div>
 
-            {/* Footer */}
-            <div className="bg-gradient-to-r from-transparent to-crimson-red/10 p-4 border-t border-white/10">
-              <p className="text-center text-roman-silver text-sm">
-                Can't find a suitable time?{" "}
-                <a
-                  href="mailto:shutterarc.studios@gmail.com"
-                  className="text-crimson-red hover:text-white transition-colors font-medium"
-                >
-                  Email us directly
-                </a>
-              </p>
+            {/* Calendar iframe */}
+            <div className="h-full bg-white">
+              <iframe
+                src={calendarUrl}
+                className="w-full h-full border-0"
+                title="Schedule Appointment"
+                loading="lazy"
+                allow="camera; microphone"
+                style={{ height: "calc(100% - 89px)" }}
+              />
             </div>
           </div>
         </div>
       )}
     </>
   );
-}
+};
