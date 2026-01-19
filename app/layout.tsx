@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     description: "Your creative partner for visual excellence. Specializing in video editing, cinematography, photography, and graphic design. Transform ideas into captivating visuals.",
     images: [
       {
-        url: "/images/Logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "ShutterArc Studios Logo",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ShutterArc Studios - Professional Video Editing & Creative Services",
     description: "Your creative partner for visual excellence. Expert video editing, cinematography, photography, and graphic design services.",
-    images: ["/images/Logo.png"],
+    images: ["/og-image.png"],
     creator: "@shutterarcstudios",
   },
   robots: {
