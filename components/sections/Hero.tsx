@@ -17,20 +17,9 @@ export default function Hero() {
           Hire High Performing
         </h1>
         
-        <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold flex justify-center items-center mt-8 px-2">
+        <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold flex justify-center items-center mt-8 leading-tight md:leading-normal px-2 inline-block">
           <span className="text-crimson-red uppercase inline-block">
-            <Typewriter
-              options={{
-                strings: [...TYPING_WORDS],
-                autoStart: true,
-                loop: true,
-                delay: 80,
-                deleteSpeed: 50,
-                cursor: '|',
-                wrapperClassName: 'typewriter-wrapper',
-                cursorClassName: 'typewriter-cursor',
-              }}
-            />
+            Content Creators
           </span>
         </h2>
 
