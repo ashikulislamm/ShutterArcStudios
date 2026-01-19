@@ -36,12 +36,12 @@ export const FloatingAppointmentButton = () => {
       document.addEventListener("keydown", handleEsc);
       document.body.style.overflow = "hidden"; // Prevent background scrolling
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = ""; // Restore default scrolling
     }
 
     return () => {
       document.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = ""; // Restore default scrolling
     };
   }, [showModal]);
 
@@ -113,9 +113,8 @@ export const FloatingAppointmentButton = () => {
 
           {/* Icon */}
           <Calendar
-            className={`w-7 h-7 transition-transform duration-300 ${
-              isExpanded ? "rotate-180" : "rotate-0"
-            }`}
+            className={`w-7 h-7 transition-transform duration-300 ${isExpanded ? "rotate-180" : "rotate-0"
+              }`}
           />
         </button>
       </div>

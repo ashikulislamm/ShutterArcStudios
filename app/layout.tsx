@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "Transform your vision into reality with ShutterArc Studios. Expert video editing, cinematography, photography, and graphic design services. Creating digital excellence through innovative visual storytelling.",
   keywords: [
     "Video Editor",
-    "Cinematographer", 
+    "Cinematographer",
     "Photographer",
     "Graphic Designer",
     "Video Editing Services",
@@ -89,7 +89,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className} suppressHydrationWarning={true} style={{ overflow: 'hidden' }}>
+      <body className={montserrat.className} suppressHydrationWarning={true}>
         <Preloader />
         <Header />
         <main>{children}</main>

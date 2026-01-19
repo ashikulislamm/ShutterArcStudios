@@ -23,7 +23,7 @@
   html {
     font-size: 10px;
     scroll-behavior: smooth;
-    overflow: hidden !important;
+    overflow-x: hidden;
   }
 
   body {
@@ -33,9 +33,10 @@
     font-size: 1.6rem;
     line-height: 1.75;
     background-image: url("/images/DOTTED_BG.png");
-    overflow: hidden !important;
+    overflow-x: hidden;
     width: 100%;
     max-width: 100%;
+    position: relative;
   }
 
   body.nav-active {
